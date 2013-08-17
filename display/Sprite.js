@@ -43,7 +43,7 @@ define(['display/Shape', 'display/Image'], function(_s) {
 		s.globalAlpha = this._alpha;
 
 		s.translate(this._x, this._y);
-		s.rotate(this._angle || 0);
+		s.rotate(this.angle || 0);
 		s.scale(this._scaleX, this._scaleY);
 
 		//s.transform(this.m00, this.m10, this.m01, this.m11, this.m02, this.m12);

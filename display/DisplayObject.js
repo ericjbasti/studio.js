@@ -131,7 +131,7 @@ define(['studio'], function(_s) {
 	
 			var sin = Math.sin;
 			var cos = Math.cos;
-			var angle = this.angle*this.orbitSpeed;
+			var angle = this._angle*this.orbitSpeed;
 			this._orbitX = (x * cos(angle)) - (y * sin(angle));
 			this._orbitY = (x * sin(angle)) + (y * cos(angle));
 		},
@@ -147,6 +147,7 @@ define(['studio'], function(_s) {
 			this._width = this.width * this._scaleX;
 			this._height = this.height * this._scaleY;
 			this._radius = this.radius * this._scaleY;
+			this._angle = a.angle;
 			if (a._visible==false){
 				this._visible=false;
 			}else{
@@ -154,7 +155,6 @@ define(['studio'], function(_s) {
 			}
 			if (this._rotate) {
 				this.angle = (this._rotate / 180 * 3.14159265);
-				this._angle= this.angle + a._angle;
 			}
 			this._alpha = this.alpha * a._alpha;
 			

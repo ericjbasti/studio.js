@@ -20,7 +20,7 @@ define(['display/DisplayObject'], function(_s) {
 		s.globalAlpha = this._alpha;
 		s.translate(this._x, this._y);
 		s.scale(this._scaleX, this._scaleY);
-		s.rotate(this._angle || 0);
+		s.rotate(this.angle || 0);
 		s.fillStyle = this.color;
 		s.fillRect(-(this.width*this.anchorX),-(this.height*this.anchorY), this.width, this.height);
 		s.restore();
