@@ -30,7 +30,6 @@ define(['display/DisplayObject'],function(Studio){
 			if(this.onLoadComplete) this.onLoadComplete();
 			return this;
 		} else {
-			//if (!Studio.loadOnDemand) Studio.loaded=false;
 			Studio.loaded=Studio.loadOnDemand;
 			Studio.assets[who] = new Image();
 			Studio.assets.length++;
@@ -39,7 +38,6 @@ define(['display/DisplayObject'],function(Studio){
 				Studio.queue++;
 				first.ready=true;
 				first.path=who;
-				console.log('loaded')
 				if (!first.height) first.height=this.height;
 				if (!first.width) first.width=this.width;
 				if (!first.frameRect.y2) first.frameRect.y2=this.height;

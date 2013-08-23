@@ -1,4 +1,4 @@
-theStudio
+studio.js
 =========
 
-a 2d canvas animation engine.
+A 2d Canvas Animation engine.

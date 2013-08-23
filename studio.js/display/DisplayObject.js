@@ -230,6 +230,10 @@ define(['studio'], function(_s) {
 
 		// 
 		makeInteractive: function(){
+			if(!this.ctx) {
+				console.error('The '+ this.type +' "'+this.name+'" must be added to a Stage before it can be added to ctx._interactives Array.');
+				return 0;
+			}
 			if (!this.ctx._interactives) {
 				this.ctx._interactives = [];
 			}
