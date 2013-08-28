@@ -54,6 +54,20 @@ define(['display/DisplayObject'],function(Studio){
 		}
 	};
 
+	Studio.Image.prototype.applyEffect = function(effect){
+		if (!this.buffer) this.buffer=document.createElement('canvas');
+		this.ctx = this.buffer.getContext('2d');
+		this.buffer.width=this.image.width;
+		this.buffer.height=this.image.height;
+		this.ctx.drawImage(this.image,0,0);
+
+		var buffer=this.ctx.getImageData(0,0,this.buffer.width,this.buffer.height);
+		this.ctx.putImageData(effect(buffer),0,0);
+		this.image=this.buffer;
+	}
+
+
+
 	Studio.Image.prototype.constructor = Studio.Image;
 
 

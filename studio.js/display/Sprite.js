@@ -98,6 +98,10 @@ define(['display/Shape', 'display/Image'], function(_s) {
 			if(this.onBitmapLoad){
 				if (this.bitmap){
 					if(this.bitmap.ready){
+						// if(this.height==1 && this.width==1){
+						// 	this.height=this.bitmap.height;
+						// 	this.width=this.bitmap.width;
+						// }
 						this.onBitmapLoad();
 						delete this['onBitmapLoad'];
 					}
