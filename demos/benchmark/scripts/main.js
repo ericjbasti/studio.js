@@ -70,7 +70,7 @@ require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader'], fu
 	}
 	Asteroid.prototype = new studio.Sprite();
 
-	for (var i=0;i!=400;i++){
+	for (var i=0;i!=40;i++){
 		stage.addChild(new Asteroid());
 	}
 

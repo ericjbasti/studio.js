@@ -54,7 +54,7 @@ define(['display/DisplayObject'],function(Studio){
 		}
 	};
 
-	Studio.Image.prototype.applyEffect = function(effect){
+	Studio.Image.prototype.applyEffect = function(){
 		if (!this.buffer) this.buffer=document.createElement('canvas');
 		this.ctx = this.buffer.getContext('2d');
 		this.buffer.width=this.image.width;
@@ -62,7 +62,24 @@ define(['display/DisplayObject'],function(Studio){
 		this.ctx.drawImage(this.image,0,0);
 
 		var buffer=this.ctx.getImageData(0,0,this.buffer.width,this.buffer.height);
-		this.ctx.putImageData(effect(buffer),0,0);
+		var width=(this.buffer.width*4);
+		for (var i=0; i<buffer.data.length; i+=4) {
+			var oldpixel=(buffer.data[i]);
+			var newpixel=parseInt(oldpixel/255)*255;
+			buffer.data[i]=buffer.data[i+1]=buffer.data[i+2]=newpixel;
+			var qerror = (oldpixel-newpixel)*(.18);
+		if((i % width === 0) && (i+4 % width === 0)){
+		
+		}else{
+			buffer.data[i+5]=buffer.data[i+6]=buffer.data[i+4]+=(qerror);
+				buffer.data[i+9]=buffer.data[i+10]=buffer.data[i+8]+=(qerror);
+				buffer.data[i+5+width]=buffer.data[i+6+width]=buffer.data[i+4+width]+=(qerror);
+				buffer.data[i+1+width]=buffer.data[i+2+width]=buffer.data[i+width]+=(qerror);
+				buffer.data[i+width-3]=buffer.data[i+width-2]=buffer.data[i+width-4]+=(qerror);
+				buffer.data[i+width*2]=buffer.data[i+(width*2)]=buffer.data[i+(width*2)]+=(qerror);
+			}
+		}
+		this.ctx.putImageData(buffer,0,0);
 		this.image=this.buffer;
 	}
 

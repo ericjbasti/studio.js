@@ -5,7 +5,7 @@ require.config({
 	}
 });
 
-require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader'], function(studio) {
+require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader', 'Animation'], function(studio) {
 	// Asteroid Benchmark
 	studio.snapToPixel=true;
 
@@ -13,14 +13,13 @@ require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader'], fu
 	//stage.color='red'
 	var rock= new studio.Image('imgs/24grey.gif',24,24);
 	rock.onLoadComplete= function(){
-		this.applyEffect(studio.halftone);
-	}
-
-	butterfly = new studio.Image('imgs/abcFLAT.png');
-	butterfly.onLoadComplete = function(){
 		//this.applyEffect(studio.halftone);
 	}
 
+	butterfly = new studio.Image('imgs/abcBLUR.png');
+	butterfly.onLoadComplete = function(){
+		//this.applyEffect(studio.halftone);
+	}
 	studio.halftone = function(pixels) {
 		var d = pixels.data;
 		var width=(studio.buffer.width*4);
@@ -29,10 +28,10 @@ require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader'], fu
 			var newpixel=parseInt(oldpixel/255)*255;
 			d[i]=d[i+1]=d[i+2]=newpixel;
 			var qerror = (oldpixel-newpixel)*(.18);
-		if((i % width === 0) && (i+4 % width === 0)){
-		
-		}else{
-			d[i+5]=d[i+6]=d[i+4]+=(qerror);
+			if((i % width === 0) && (i+4 % width === 0)){
+			
+			}else{
+				d[i+5]=d[i+6]=d[i+4]+=(qerror);
 				d[i+9]=d[i+10]=d[i+8]+=(qerror);
 				d[i+5+width]=d[i+6+width]=d[i+4+width]+=(qerror);
 				d[i+1+width]=d[i+2+width]=d[i+width]+=(qerror);
@@ -46,6 +45,56 @@ require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader'], fu
 
 	var rock_sheet = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
 	studio.buildSheet(rock_sheet,24);
+
+	studio.halftone = function(a) {
+		var buffer=a.getImageData(0,0,a.width,a.height);
+		var width=(a.width*4);
+		for (var i=0; i<buffer.data.length; i+=4) {
+			var oldpixel=(buffer.data[i]);
+			var newpixel=parseInt(oldpixel/255)*255;
+			buffer.data[i]=buffer.data[i+1]=buffer.data[i+2]=newpixel;
+			var qerror = (oldpixel-newpixel)*(.18);
+			if((i % width === 0) && (i+4 % width === 0)){
+			
+			}else{
+				buffer.data[i+5]=buffer.data[i+6]=buffer.data[i+4]+=(qerror);
+				buffer.data[i+9]=buffer.data[i+10]=buffer.data[i+8]+=(qerror);
+				buffer.data[i+5+width]=buffer.data[i+6+width]=buffer.data[i+4+width]+=(qerror);
+				buffer.data[i+1+width]=buffer.data[i+2+width]=buffer.data[i+width]+=(qerror);
+				buffer.data[i+width-3]=buffer.data[i+width-2]=buffer.data[i+width-4]+=(qerror);
+				buffer.data[i+width*2]=buffer.data[i+(width*2)]=buffer.data[i+(width*2)]+=(qerror);
+			}
+		}
+		a.putImageData(buffer,0,0);
+	}
+
+	studio.red = function(a) {
+		var buffer=a.getImageData(0,0,a.width,a.height);
+		var width=(a.width*4);
+		for (var i=0; i<buffer.data.length; i+=4) {
+			buffer.data[i+1]=buffer.data[i+2]=0;
+		}
+		a.putImageData(buffer,0,0);
+	}
+	studio.blue = function(a) {
+		var buffer=a.getImageData(0,0,a.width,a.height);
+		var width=(a.width*4);
+		for (var i=0; i<buffer.data.length; i+=4) {
+			buffer.data[i]=buffer.data[i+1]=0;
+		}
+		a.putImageData(buffer,0,0);
+	}
+
+	studio.posterize = function(a) {
+		var buffer=a.getImageData(0,0,a.width,a.height);
+		var width=(a.width*4);
+		for (var i=0; i<buffer.data.length; i+=4) {
+			buffer.data[i]=((buffer.data[i]/64) >> 0)*64;
+			buffer.data[i+1]=((buffer.data[i+1]/64) >> 0)*64;
+			buffer.data[i+2]=((buffer.data[i+2]/64) >> 0)*64;
+		}
+		a.putImageData(buffer,0,0);
+	}
 
 	studio.displayFPS = function(a) {
 		var n = 60 / a.frameRatio;
@@ -112,7 +161,7 @@ require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader'], fu
 	}
 
 
-
+	stage.addEffect(studio.halftone);
 	stage.addEffect(studio.displayFPS);
 	var Asteroid = function(c) {
 		this.z = Math.random() * 8;
@@ -154,13 +203,16 @@ require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader'], fu
 	}
 	Asteroid.prototype = new studio.Sprite();
 
-	for (var i=0;i!=400;i++){
+	for (var i=0;i!=40;i++){
 		stage.addChild(new Asteroid());
 	}
 	butter = new studio.Sprite();
 	butter.apply({x:50, y:50, width: 500, height:500})
 	butter.bitmap = butterfly;
 
+	butter.onReady = function(){
+		this.addTween('easeInOut',{scaleX:4, scaleY:4},10000)
+	}
 	stage.addChild(butter);
 	// stage.onReady=function(){
 	// }

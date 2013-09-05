@@ -194,7 +194,7 @@ define(['display/Shape', 'display/Camera'], function(_s) {
 		var then = this.ctx.then;
 		var now = this.ctx.now = Date.now();
 		var delta = now - then;
-		if (delta > 41) delta = 41;
+		//if (delta > 41) delta = 41;
 		this.ctx.timeDelta = delta * this.speed;
 		this.ctx.then = now;
 		this.ctx.frameRatio = 60 / (1000 / delta);
@@ -238,10 +238,12 @@ define(['display/Shape', 'display/Camera'], function(_s) {
 
 	// autoPause will add the needed listeners to make the canvas stop playing when the user is nolonger viewing its tab
 
-	_s.Stage.prototype.trash = function(a){
-		if(!this.ctx.trash) this.ctx.trash=[];
-		this.ctx.trash.push(a);
-	}
+	// ??? what was the idea with this? 
+	// ???
+	//	_s.Stage.prototype.trash = function(a){
+	//		if(!this.ctx.trash) this.ctx.trash=[];
+	//		this.ctx.trash.push(a);
+	//	}
 
 
 	_s.Stage.prototype.autoPause = function() {
