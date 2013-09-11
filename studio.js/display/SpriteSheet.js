@@ -1,11 +1,9 @@
 define(['display/Image'],function(Studio){
 
 	Studio.SpriteSheet=function(path){
-		this.image=new Image();
+		this.image=null;
 		this.path=path || '';
 		this.ready=false;
-		//this.height=height;
-		//this.width=width;
 		this.assets = null;
 		if(path){
 			this.loadJSON(path);
@@ -33,12 +31,16 @@ define(['display/Image'],function(Studio){
 		    	if(this.response){
 		    		sheet.assets=JSON.parse(this.response);
 		    		Studio.queue++;
+		    		sheet.image= new Studio.Image('imgs/untitled.png');
 		    	}
 	    	};
 	   		file.send(null)
    		}
 	}
 
+	Studio.SpriteSheet.prototype.get = function(who){
+		return(this.assets.frames[who].frame);
+	}
 
 	return Studio;
 });

@@ -5,16 +5,16 @@ require.config({
 	}
 });
 
-require(['display/Sprite','display/SpriteSheet','input/Touch','display/Loader', 'Animation'], function(studio) {
+require(['display/Sprite','display/SpriteSheet','input/Touch','display/Loader', 'display/Animation'], function(studio) {
 
-	spp= new studio.SpriteSheet('imgs/untitled.json');
+	//spp= new studio.SpriteSheet('imgs/untitled.json');
 
 
 	// lets redefine some defaults:
 	studio.Shape.prototype.anchorX=.5;
 	studio.Shape.prototype.anchorY=.5;
 
-	var stage = new studio.Stage('stage');
+	stage = new studio.Stage('stage');
 	stage.color=null; // no background color, lets go transparent.
 	stage.enableTouchEvents();
 
@@ -43,6 +43,21 @@ require(['display/Sprite','display/SpriteSheet','input/Touch','display/Loader', 
 
 	stage.addChild(ground);
 	var count=0;
+
+	var loader = new studio.Loader();
+	loader.apply({height:stage.height,width:stage.width,color:'rgba(0,125,0,.2)'});
+
+	var progressBar = new studio.Shape();
+	progressBar.apply({x:50,y:50,width:250,height:25,scaleX:0});
+
+	progressBar.onEnterFrame=function(){
+		this.scaleX=this.parent.progress;
+	}
+
+	loader.addChild(progressBar)
+	stage.setLoader(loader);
+
+
 
 	charLoop = function(){
 		if(count<2){

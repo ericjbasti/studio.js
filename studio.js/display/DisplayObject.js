@@ -192,12 +192,12 @@ define(['studio'], function(_s) {
 		preRender : function(){
 			if (this.visible && this.onEnterFrame) this.onEnterFrame(this.ctx.frameRatio * this._speed);
 		
-			if(this.parent.type!=='Studio.Stage'){
+			//if(this.parent.type!=='Studio.Stage'){
 				this._update(this.parent);
-			}else{
-				this._update(this.parent);
+			//}else{
+			//	this._update(this.parent);
 				//this._simpleUpdate();
-			}
+			//}
 
 			if(this.tween){
 				for (var j in this.tween) {
@@ -206,19 +206,19 @@ define(['studio'], function(_s) {
 			}
 		},
 		renderChildren : function(){
-			if (this._children) {
-				var length = this._children.length;
-				var i = length;
-				while (i) {
-					//we might have removed this child at some point, we should check before we try to render him.
-					if(this._children[length - i]) this._children[length - i].render();
-					i--;
-				}
+			var length = this._children.length;
+			var i = length;
+			while (i) {
+				//we might have removed this child at some point, we should check before we try to render him.
+				if(this._children[length - i]) this._children[length - i].render();
+				i--;
 			}
 		},
 		postRender : function(){
-			this.renderChildren();
-			if (this.visible && this.onExitFrame) this.onExitFrame(this.ctx.frameRatio * this._speed);
+			if(this.visible){
+				if (this._children) this.renderChildren();
+				if (this.onExitFrame) this.onExitFrame(this.ctx.frameRatio * this._speed);
+			}
 		},
 		render : function() {
 			this.preRender();

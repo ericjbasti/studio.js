@@ -1,4 +1,4 @@
-define(['Ease','display/Shape'],function(Studio){
+define(['display/Ease','display/Shape'],function(Studio){
 Studio.Animation=function(){
 	this.keys=[];
 	this.cur=0;

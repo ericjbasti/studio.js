@@ -5,7 +5,7 @@ require.config({
 	}
 });
 
-require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader', 'Animation'], function(studio) {
+require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader', 'display/Animation'], function(studio) {
 	// Asteroid Benchmark
 	studio.snapToPixel=true;
 

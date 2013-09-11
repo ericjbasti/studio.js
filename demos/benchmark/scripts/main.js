@@ -7,14 +7,13 @@ require.config({
 
 require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader'], function(studio) {
 	// Asteroid Benchmark
-	studio.snapToPixel=false;
+	//studio.snapToPixel=true;
 
 	stage = new studio.Stage('stage');
 	//stage.color='red'
 	var rock= new studio.Image('imgs/24grey.gif',24,24);
 	var rock_sheet = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
 	studio.buildSheet(rock_sheet,24);
-
 	studio.displayFPS = function(a) {
 		var n = 60 / a.frameRatio;
 		n = n + (n < 0 ? -1 : 0) >> 0;
@@ -41,10 +40,8 @@ require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader'], fu
 		this.spriteSheetX=24;
 		this.setStartingFrame(this.frame);
 		this.fps = (Math.random()*6)+6;
-		this.radius = this.width * .75;
 		this.velocityX = Math.random() * 2;
 		this.velocityY = Math.random() * 2;
-		this.anchor = [.5, .5];
 		this.onEnterFrame = function(s) {
 			if (this.velocityX > 1) this.velocityX = 1;
 			if (this.velocityX < -1) this.velocityX = -1;
@@ -56,13 +53,11 @@ require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader'], fu
 				this.x = -this.width;
 				this.height = Math.random() * 10 + 14;
 				this.width = this.height;
-				//this.radius = this.width / 2;
 			}
 			if (this.y >stage.height + 32) {
 				this.y = -64;
 				this.height = Math.random() * 10 + 14;
 				this.width = this.height;
-				//this.radius = this.width / 2;
 			}
 			if (this.y < -64) this.y = stage.height + 32;
 			if (this.x < -64) this.x = stage.width + 32;
@@ -70,7 +65,7 @@ require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader'], fu
 	}
 	Asteroid.prototype = new studio.Sprite();
 
-	for (var i=0;i!=40;i++){
+	for (var i=0;i!=400;i++){
 		stage.addChild(new Asteroid());
 	}
 
@@ -158,3 +153,11 @@ require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader'], fu
 
 
 });
+
+// window.onscroll = function(){
+// 	var temp = stage.speed;
+// 	stage.speed=0;
+// 	setTimeout(function(){
+// 		stage.speed=temp;
+// 	},100);
+// }

@@ -21,12 +21,15 @@ define(['display/Shape', 'display/Camera'], function(_s) {
 		
 		//this.ctx=this.buffer.getContext("2d");
 		this.ctx=this.canvas.getContext('2d');
+		//
+		//this.ctx.imageSmoothingEnabled = false;
+		//
 		this.ctx.resolution= this.resolution;
 		this.ctx._interactives = null;
 		this.ctx.then = this.startTime = Date.now();
 		this._setDimensions(this.canvas.width,this.canvas.height);
-		this.buffer.height=this.canvas.height;
-		this.buffer.width=this.canvas.width;
+		//this.buffer.height=this.canvas.height;
+		//this.buffer.width=this.canvas.width;
 		this.timeDelta = 0;
 		this.now = 0;
 		this.parent = this.canvas;
@@ -174,13 +177,13 @@ define(['display/Shape', 'display/Camera'], function(_s) {
 			s.fillRect(0, 0, s.width, s.height);
 		}
 		this.updateCamera();
-		s.save();
+		//s.save();
 		//s.scale(this.resolution,this.resolution);
 		s.globalAlpha = camera.alpha;
 		//s.translate(camera.x,camera.y);
 		//s.scale(camera.scaleX,camera.scaleX);
 		this.renderChildren();
-		s.restore();
+		//s.restore();
 		if (this.onExitFrame) this.onExitFrame(s.frameRatio * this.speed, s.frameRatio);
 		if (effects.length) {
 			length = effects.length;

@@ -17,7 +17,7 @@ define(['display/DisplayObject'], function(_s) {
 	_s.Shape.prototype.draw = function() {
 		var s = this.ctx;
 		s.save();
-		s.globalAlpha = this._alpha;
+		if(s.globalAlpha!=this._alpha) s.globalAlpha = this._alpha;
 		s.translate(this._x, this._y);
 		s.scale(this._scaleX, this._scaleY);
 		s.rotate(this.angle || 0);
@@ -28,7 +28,7 @@ define(['display/DisplayObject'], function(_s) {
 
 	_s.Shape.prototype.drawBasic = function() {
 		var s = this.ctx;
-		s.globalAlpha = this._alpha;
+		if(s.globalAlpha!=this._alpha) s.globalAlpha = this._alpha;
 		var width = this._width;
 		var height = this._height;
 		var x = this._x;
@@ -46,7 +46,7 @@ define(['display/DisplayObject'], function(_s) {
 	_s.Shape.prototype.render = function() {
 		if(this.ctx && this.live){
 			this.preRender();
-			if (this._visible && this.ctx) {
+			if (this._visible) {
 				//we want to use the basic method as much as possible, transforms are slow...
 				if (this._rotate === 0) {
 					this.drawBasic();

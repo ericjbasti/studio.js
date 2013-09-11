@@ -39,8 +39,8 @@ define(['display/Shape', 'display/Image'], function(_s) {
 
 	_s.Sprite.prototype.draw = function() {
 		var s = this.ctx;
-		s.save();
-		s.globalAlpha = this._alpha;
+		//s.save();
+		if(s.globalAlpha!=this._alpha) s.globalAlpha = this._alpha;
 
 		s.translate(this._x, this._y);
 		s.rotate(this.angle || 0);
@@ -66,9 +66,8 @@ define(['display/Shape', 'display/Image'], function(_s) {
 	};
 
 	_s.Sprite.prototype.drawBasic = function() {
-		//var a= this;
 		var s = this.ctx;
-		s.globalAlpha = this._alpha;
+		if(s.globalAlpha!=this._alpha) s.globalAlpha = this._alpha;
 
 		var width = this.width;
 		var height = this.height;
@@ -82,18 +81,18 @@ define(['display/Shape', 'display/Image'], function(_s) {
 			height = height + (height < 0 ? -1 : 0) | 0;
 		}
 
-		if (this.bitmap && this.bitmap.ready) {
+		//if (this.bitmap && this.bitmap.ready) {
 			var frame = this.sequence[this.frame] || 0;
 			var sheetY = frame + (frame < 0 ? -1 : 0) | 0;
 			var sheetX = (frame - sheetY) * this.spriteSheetX || 0;
 
 			s.drawImage(this.bitmap.image, this.bitmap.frameRect.x2 * sheetX, this.bitmap.frameRect.y2 * sheetY, this.bitmap.frameRect.x2, this.bitmap.frameRect.y2, x - (width * this._scaleX) * this.anchorX, y - (height * this._scaleX) * this.anchorY, width * this._scaleX, height * this._scaleY);
-
 			this.updateFrame();
-		}
+		//}
 	};
 
-	_s.Shape.prototype.render = function() {
+	_s.Sprite.prototype.render = function() {
+		
 		if(this.ctx && this.live){
 			if(this.onBitmapLoad){
 				if (this.bitmap){
@@ -108,7 +107,7 @@ define(['display/Shape', 'display/Image'], function(_s) {
 				}
 			};
 			this.preRender();
-			if (this._visible && this.ctx) {
+			if (this._visible && this.ctx && this.bitmap && this.bitmap.ready) {
 
 				//we want to use the basic method as much as possible, transforms are slow...
 				if (this._rotate === 0) {

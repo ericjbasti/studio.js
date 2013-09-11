@@ -13,11 +13,11 @@ define(['display/Shape'], function(Studio) {
 	Studio.Vector.prototype.draw = function() {
 		var ctx = this.ctx;
 
-		ctx.save();
+		//ctx.save();
 		ctx.globalAlpha = this._alpha;
 		ctx.translate(this._x, this._y);
-		ctx.rotate(this._angle || 0);
 		ctx.scale(this._scaleX, this._scaleY);
+		ctx.rotate(this.angle || 0);
 		var cache=this.cache;
 		
 		if(!cache){
@@ -27,7 +27,7 @@ define(['display/Shape'], function(Studio) {
 			cache, 0, 0, cache.width, cache.height, -cache.width * this.anchorX, // we've already translated, no need to move again
 			- cache.height * this.anchorY, cache.width, cache.height);
 		}
-		ctx.restore();
+		//ctx.restore();
 	}
 
 	Studio.Vector.prototype.cacheAsBitmap = function(width,height){

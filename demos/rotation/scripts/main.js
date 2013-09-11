@@ -5,7 +5,7 @@ require.config({
 	}
 });
 
-require(['display/Sprite','input/Touch','display/Loader', 'Animation'], function(studio) {
+require(['display/Sprite','input/Touch','display/Loader', 'display/Animation', 'display/Vector'], function(studio) {
 
 	// lets redefine some defaults:
 	studio.Shape.prototype.anchorX=.5;
@@ -37,13 +37,39 @@ require(['display/Sprite','input/Touch','display/Loader', 'Animation'], function
 			planet.y-=dy;
 		}
 	}
+	
 
+	var mask = new studio.Vector();
+	mask.apply({width:122.1, height:122, anchorY:.5,anchorY:.5})
+	mask.vector = function(ctx){
+		//ctx.save();
+      	ctx.beginPath();
+      	ctx.moveTo(64.6, 0.0);
+      	ctx.lineTo(79.8, 46.9);
+      	ctx.lineTo(129.1, 46.9);
+      	ctx.lineTo(89.2, 75.4);
+      	ctx.lineTo(104.5, 122.1);
+      	ctx.lineTo(64.6, 93.0);
+     	ctx.lineTo(24.7, 121.9);
+      	ctx.lineTo(39.9, 75.5);
+      	ctx.lineTo(0.0, 46.9);
+      	ctx.lineTo(49.3, 46.9);
+      	ctx.lineTo(64.6, 0.0);
+      	ctx.closePath();
+      	ctx.clip();
+      	//ctx.fill();
+      	//ctx.restore();
+	}
+
+
+	//stage.addChild(mask);
 	planet.addChildren(moon, spaceStation);
 	stage.addChild(planet);
 	planet.makeInteractive();
-	
+
 	stage.onReady = function(){
 		planet.addTween('easeInOut',{y:240,x:240},2000);
+		//mask.addTween('easeInOut',{scaleX:3,scaleY:3},2000)
 	}
 
 

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<!-- Created with Ai->Canvas Export Plug-In Version 1.0 (Mac) -->
+<!-- By Mike Swanson (http://blogs.msdn.com/mswanson/)        -->
+<!-- and MIX Online  (http://visitmix.com/)                   -->
+
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <title>star</title>
+  <script>
+
+    function init() {
+
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+
+      draw(ctx);
+    }
+
+    function draw(ctx) {
+
+      // layer1/Path
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(64.6, 0.0);
+      ctx.lineTo(79.8, 46.9);
+      ctx.lineTo(129.1, 46.9);
+      ctx.lineTo(89.2, 75.4);
+      ctx.lineTo(104.5, 122.1);
+      ctx.lineTo(64.6, 93.0);
+      ctx.lineTo(24.7, 121.9);
+      ctx.lineTo(39.9, 75.5);
+      ctx.lineTo(0.0, 46.9);
+      ctx.lineTo(49.3, 46.9);
+      ctx.lineTo(64.6, 0.0);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+  </script>
+ </head>
+ <body onload="init()">
+   <canvas id="canvas" width="130" height="123"></canvas>
+ </body>
+</html>
