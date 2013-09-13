@@ -26,7 +26,7 @@ define(['display/Shape', 'display/Image'], function(_s) {
 	};
 
 	_s.Sprite.prototype.updateFrame = function() {
-		this.myTime += this.ctx.timeDelta;
+		this.myTime += this.ctx.delta;
 
 		this.frame = (((this.myTime - this.startTime) * this._speed) / (1000 / this.fps)) | 0;
 

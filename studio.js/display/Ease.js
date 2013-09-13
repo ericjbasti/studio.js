@@ -18,7 +18,7 @@ _s.DisplayObject.prototype.addTween=function(t,a,d,next,del){
 	var name='tween_id'+((Math.random()*255255255) | 0);
 	
 	this.tween[name]=function(){
-		cur+=((w.ctx.timeDelta)*w._speed);
+		cur+=((w.ctx.delta)*w._speed);
 
 		if(d>=cur){
 			for (var i in a){

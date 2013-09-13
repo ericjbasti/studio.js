@@ -7,7 +7,7 @@ require.config({
 
 require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader'], function(studio) {
 	// Asteroid Benchmark
-	//studio.snapToPixel=true;
+	studio.snapToPixel=true;
 
 	stage = new studio.Stage('stage');
 	//stage.color='red'
@@ -65,24 +65,24 @@ require(['display/Sprite', 'display/Vector', 'input/Touch','display/Loader'], fu
 	}
 	Asteroid.prototype = new studio.Sprite();
 
-	for (var i=0;i!=400;i++){
+	for (var i=0;i!=3000;i++){
 		stage.addChild(new Asteroid());
 	}
 
 	stage.onReady=function(){
 	}
 	stage.onEnterFrame=function(b,a){
-		if(a<1.8){
-			stage.addChild(new Asteroid());
-		}
+		 //if(b<34){
+		 	//stage.addChild(new Asteroid());
+		//}else{
+//
+		//}
+		if(this.ctx.delta<34) this.addChild(new Asteroid());
+		//console.log(b,a);
 	}
 
 
 	stage.loop();
-
-
-
-
 
 // Tween & Canvas Transport Example
 

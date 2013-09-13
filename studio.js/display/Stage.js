@@ -30,8 +30,8 @@ define(['display/Shape', 'display/Camera'], function(_s) {
 		this._setDimensions(this.canvas.width,this.canvas.height);
 		//this.buffer.height=this.canvas.height;
 		//this.buffer.width=this.canvas.width;
-		this.timeDelta = 0;
-		this.now = 0;
+		//this.timeDelta = 0;
+		//this.now = 0;
 		this.parent = this.canvas;
 
 		// in our world everything is viewed with a Camera
@@ -39,11 +39,10 @@ define(['display/Shape', 'display/Camera'], function(_s) {
 		this.ready = false;
 		this.update = true;
 		this.loop = function() {
-			me.updateFPS();
+			me.tick();
 			requestAnimationFrame(me.loop);
 			if (_s.loaded) {
 				if (me.speed > 0 && !me.onReady) {
-					//me.displayCTX.drawImage(me.buffer,0,0);
 					me.render();
 					return;
 				}
@@ -193,14 +192,12 @@ define(['display/Shape', 'display/Camera'], function(_s) {
 		}
 	};
 
-	_s.Stage.prototype.updateFPS = function() {
-		var then = this.ctx.then;
+	_s.Stage.prototype.tick = function() {
 		var now = this.ctx.now = Date.now();
-		var delta = now - then;
-		//if (delta > 41) delta = 41;
-		this.ctx.timeDelta = delta * this.speed;
+		this.ctx.delta = now - this.ctx.then;
+		//if (delta > 41) delta = 41; 
 		this.ctx.then = now;
-		this.ctx.frameRatio = 60 / (1000 / delta);
+		this.ctx.frameRatio = 60 / (1000 / this.ctx.delta);
 	};
 
 	_s.Stage.prototype.addInput = function(fn, type) {
