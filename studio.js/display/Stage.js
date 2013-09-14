@@ -251,12 +251,20 @@ define(['display/Shape', 'display/Camera'], function(_s) {
 
 		window.addEventListener("blur", function() {
 			me.speed = 0;
-			console.log('paused');
 		}, false);
 
 		window.addEventListener("focus", function() {
-			me.ctx.then = me.ctx.now;
+			me.ctx.then = Date.now();
 			me.speed = 1;
+		}, false);
+
+		document.addEventListener("webkitvisibilitychange", function(){ // I'll add in the other prefixes later
+			if(document.webkitHidden){
+				me.speed = 0;
+			}else{
+				me.ctx.then = Date.now();
+				me.speed = 1;
+			}
 		}, false);
 	};
 

@@ -17,7 +17,8 @@ require(['display/Sprite','display/SpriteSheet','input/Touch','display/Loader', 
 	stage = new studio.Stage('stage');
 	stage.color=null; // no background color, lets go transparent.
 	stage.enableTouchEvents();
-
+	stage.autoPause();
+	
 	var spriteSheet = new studio.Image('imgs/sheet1.png',32,32);
 	
 	var character = new studio.Sprite();
